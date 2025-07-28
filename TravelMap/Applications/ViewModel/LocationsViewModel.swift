@@ -28,15 +28,15 @@ class LocationsViewModel {
     init() {
         let locations = LocationsDataService.locations
         self.locations = locations
-        self.mapLocation = locations.first!
+        self.mapLocation = locations[3]
         
-        self.updateMap(location: locations.first!)
+        self.updateMap(location: locations[3])
     }
     
     private func updateMap(location: LocationModel) {
         withAnimation(.easeInOut) {
             self.mapCamera = .camera(MapCamera(centerCoordinate: location.coordinates,
-                                               distance: 1000))
+                                               distance: 1400, heading: 100, pitch: 45))
         }
     }
     
@@ -51,5 +51,16 @@ class LocationsViewModel {
             mapLocation = location
             showLocationsList = false
         }
+    }
+    
+    func nextButtonPressed() {
+        guard let currentIndex = locations.firstIndex(where: {$0 == mapLocation}) else { return }
+        
+        var nextIndex = currentIndex + 1
+        if nextIndex > locations.count-1 {
+            nextIndex = 0
+        }
+        
+        showNextLocation(location: locations[nextIndex])
     }
 }

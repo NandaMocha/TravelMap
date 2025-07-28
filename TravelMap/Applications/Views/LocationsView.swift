@@ -14,11 +14,25 @@ struct LocationsView: View {
     var body: some View {
         ZStack {
             Map(position: $viewModel.mapCamera)
-                .mapStyle(.imagery)
+                .mapStyle(.standard)
             
             VStack {
                 header
                 Spacer()
+                
+                ZStack {
+                    ForEach(viewModel.locations) { location in
+                        if viewModel.mapLocation == location {
+                            LocationsPreviewView(location: location)
+                                .shadow(color: .black.opacity(0.3),
+                                        radius: 20)
+                                .padding()
+                                .transition(.asymmetric(
+                                    insertion: .move(edge: .trailing),
+                                    removal: .move(edge: .leading)))
+                        }
+                    }
+                }
             }
         }
     }
@@ -62,5 +76,7 @@ extension LocationsView {
 }
 
 #Preview {
-    LocationsView(viewModel: LocationsViewModel())
+    let viewModel = LocationsViewModel()
+    LocationsView(viewModel: viewModel)
+        .environment(viewModel)
 }
