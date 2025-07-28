@@ -13,7 +13,7 @@ struct TravelMapApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LocationsView()
+            LocationsView(viewModel: vm)
                 .environment(vm)
         }
     }

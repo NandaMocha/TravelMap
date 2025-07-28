@@ -6,19 +6,61 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct LocationsView: View {
-    @Environment(LocationsViewModel.self) var vm
+    @Bindable var viewModel: LocationsViewModel
+    
     var body: some View {
-        List {
-            ForEach(vm.locations) { location in
-                Text(location.name)
+        ZStack {
+            Map(position: $viewModel.mapCamera)
+                .mapStyle(.imagery)
+            
+            VStack {
+                header
+                Spacer()
             }
         }
     }
 }
 
+extension LocationsView {
+    private var header: some View {
+        VStack {
+            Button {
+                viewModel.toggleLocationsList()
+            } label: {
+                Text(viewModel.mapLocation.name + ", " + viewModel.mapLocation.cityName)
+                    .font(.title2)
+                    .fontWeight(.heavy)
+                    .frame(height: 55)
+                    .frame(maxWidth: .infinity)
+                    .animation(.none, value: viewModel.mapLocation)
+                    .overlay(alignment: .leading) {
+                        withAnimation {
+                            Image(systemName: "chevron.down")
+                                .font(.title2)
+                                .foregroundStyle(.primary)
+                                .padding()
+                                .rotationEffect(Angle(degrees: viewModel.showLocationsList ? 180 : 0))
+                        }
+                        
+                    }
+            }
+            .foregroundStyle(.primary)
+            
+            
+            if viewModel.showLocationsList {
+                LocationsListView(viewModel: viewModel)
+            }
+        }
+        .background(.thinMaterial)
+        .clipShape(.rect(cornerRadius: 10))
+        .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 15)
+        .padding()
+    }
+}
+
 #Preview {
-    LocationsView()
-        .environment(LocationsViewModel())
+    LocationsView(viewModel: LocationsViewModel())
 }
