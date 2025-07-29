@@ -96,9 +96,12 @@ extension LocationsView {
                     .padding()
                     .frame(maxWidth: maxWidthForIpad)
                     .frame(maxWidth: .infinity)
-                    .transition(.asymmetric(
-                        insertion: .move(edge: .trailing),
-                        removal: .move(edge: .leading)))
+//                    .transition(.asymmetric(
+//                        insertion: .move(edge: .trailing),
+//                        removal: .move(edge: .leading)))
+                    //Explore other transition
+                    .transition(AnyTransition.opacity.animation(.easeInOut))
+                
             }
         }
     }
