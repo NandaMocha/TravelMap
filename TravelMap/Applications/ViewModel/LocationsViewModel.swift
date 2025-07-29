@@ -24,6 +24,7 @@ class LocationsViewModel {
                                                 distance: 1000))
     
     var showLocationsList: Bool = false
+    var sheetLocationDetail: LocationModel?
     
     init() {
         let locations = LocationsDataService.locations
@@ -35,8 +36,9 @@ class LocationsViewModel {
     
     private func updateMap(location: LocationModel) {
         withAnimation(.easeInOut) {
-            self.mapCamera = .camera(MapCamera(centerCoordinate: location.coordinates,
-                                               distance: 1400, heading: 100, pitch: 45))
+//            self.mapCamera = .camera(MapCamera(centerCoordinate: location.coordinates,
+//                                               distance: 1400, heading: 100, pitch: 45))
+            self.mapCamera = .camera(MapCamera(centerCoordinate: location.coordinates, distance: 15000))
         }
     }
     

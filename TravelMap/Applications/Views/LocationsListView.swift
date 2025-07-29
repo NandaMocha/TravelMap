@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LocationsListView: View {
-    @Bindable var viewModel: LocationsViewModel
+    @Environment(LocationsViewModel.self) private var viewModel
     
     var body: some View {
         List {
@@ -52,5 +52,6 @@ extension LocationsListView {
 }
 
 #Preview {
-    LocationsListView(viewModel: LocationsViewModel())
+    LocationsListView()
+        .environment(LocationsViewModel())
 }

@@ -27,7 +27,7 @@ struct LocationsPreviewView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 10)
-                .foregroundStyle(.thinMaterial)
+                .foregroundStyle(.ultraThinMaterial)
                 .offset(y: 60)
         )
         .clipShape(.rect(cornerRadius: 10))
@@ -66,7 +66,7 @@ extension LocationsPreviewView {
     
     private var learnMoreButton: some View {
         Button(action: {
-            
+            viewModel.sheetLocationDetail = location
         }, label: {
             Text("Learn more")
                 .font(.headline)
